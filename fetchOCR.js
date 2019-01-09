@@ -1,18 +1,20 @@
-require('dotenv').config();
+require('dotenv').config()
 let R = require('ramda')
-let vision = require('@google-cloud/vision');
-let client = new vision.ImageAnnotatorClient();
+let vision = require('@google-cloud/vision')
+let client = new vision.ImageAnnotatorClient()
 let { get, avg, deepRemoveNullProps, isSingleton } = require("./util")
 
 module.exports = async input => {
   try {
-    let rawOCR = await client.documentTextDetection(input)
+    let rawOCR = await fetchRaw(input)
 
     return fromRaw(rawOCR)
   } catch (e) {
     return null
   }
 }
+
+let fetchRaw = input => client.documentTextDetection(input)
 
 let fromRaw = googleVisionOCRData => {
   let denullified = deepRemoveNullProps(googleVisionOCRData),
@@ -168,7 +170,7 @@ let breakWhen = predicate => {
     )
   }
 
-  return go;
+  return go
 }
 
 let blockify = breakWhen((l1, l2) => {
@@ -212,5 +214,3 @@ Object.defineProperties(
       configurable: true
     }),
     verticesDerivedData))
-
-module.exports.fromRaw = fromRaw
