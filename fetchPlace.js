@@ -1,12 +1,10 @@
+require('dotenv').config()
 let request = require('request-promise-native')
 
 let fetchPlace = async ocr => {
   try {
     let query = toQuery(ocr),
-        placesData = JSON.parse(await (request.get({
-          uri: "https://maps.googleapis.com/maps/api/place/textsearch/json",
-          qs: { query, key: process.env.GOOGLE_PLACES_API_KEY }
-        })))
+        placesData = await fetchRawPlace(query)
     
     return store = formatPlace(placesData)
   } catch (e) {
@@ -16,11 +14,11 @@ let fetchPlace = async ocr => {
 
 let toQuery = ocr => {
   let cleaned = ocr.blocks
-                    .map(b => b.string)
-                    .map(removeJunk),
+                   .map(b => b.string)
+                   .map(removeJunk),
       firstLocation = cleaned.map(locationByStateAndZip)
-                              .filter(Boolean)
-                              [0]
+                             .filter(Boolean)
+                             [0]
   
   if (firstLocation) return clean(firstLocation)
 
@@ -30,7 +28,12 @@ let toQuery = ocr => {
   return firstNontrivialBlock ? clean(firstNontrivialBlock) : null
 }
 
-let clean = str => str.replace(/\n/g, " ")
+let clean = str =>
+  str.replace(/\n/g, " ")
+     .replace(/\b(\d[\d ]*) +(\d+)/g, (_, __, last) => last) // This tends to remove extraneous numbers and leave behind street address numbers, which improves results
+     .replace(rxPunctuation, " ")
+     .replace(rxLeadingTrailingSpaces, "")
+     .replace(rxMultipleSpaces, " ")
 
 let removeJunk = str =>
   str.replace(rxWelcome, "")
@@ -39,14 +42,11 @@ let removeJunk = str =>
      .replace(rxTime, "")
      .replace(rxDate, "")
      .replace(rxPhone, "")
-     .replace(rxPunctuation, " ")
-     .replace(rxLeadingTrailingSpaces, "")
-     .replace(rxMultipleSpaces, " ")
      .replace(rxBlankLine, "")
 
-let rxWelcome = /\bwelcome(\s+to)?(\s+our\s+store)?\b/gi;
-let rxSixOrMoreDigits = /\b[A-Z\d-]*?\d{6}[A-Z\d-]*\b/g;
-let rxAdjacentLettersAndDigits = /\b[A-Z\d-]*?([A-Z]+\d+|\d+[A-Z]+)[A-Z\d-]*/g;
+let rxWelcome = /\bwelcome(\s+to)?(\s+our\s+store)?\b/gi
+let rxSixOrMoreDigits = /\b[A-Z\d-]*?\d{6}[A-Z\d-]*\b/g
+let rxAdjacentLettersAndDigits = /\b[A-Z\d-]*?([A-Z]+\d+|\d+[A-Z]+)[A-Z\d-]*/g
 let rxTime = /([1-9]|[0-1][0-9]|2[0-3]):([0-5]\d)(?::([0-5]\d))? *(am|pm)?/gi
 let rxDate = /(0?\d|1[0-2])\/(0?\d|[1-2]\d|3[0-1])\/((?:19|20)?\d\d)/g
 let rxPhone = /\(?\d\d\d\)?\W\d\d\d\W\d\d\d\d/g
@@ -56,13 +56,18 @@ let rxMultipleSpaces = /  +/g
 let rxLeadingTrailingSpaces = /(^ +)|( +$)/gm
 
 let locationByStateAndZip = str => {
-  let match = str.match(/^(?:.*\n){0,2}.*?\W *[A-Z]{2}\W*\d{5}\b/im);
+  let match = str.match(/^(?:.*\n){0,2}.*?\W *[A-Z]{2}\W*\d{5}\b/im)
 
   return match && match[0]
 }
 
 let atLeastTwoNonemptyLines = str => str.match(/\S.*\n.*\S/)
 let atLeastOneDigit = str => str.match(/\d/)
+
+let fetchRawPlace = async query => JSON.parse(await (request.get({
+  uri: "https://maps.googleapis.com/maps/api/place/textsearch/json",
+  qs: { query, key: process.env.GOOGLE_PLACES_API_KEY }
+})))
 
 let formatPlace = placesData => {
   try {
