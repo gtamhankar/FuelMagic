@@ -1,83 +1,146 @@
+html {
+  background: url("/assets/img/asphalt-1867667.jpg") no-repeat center center
+    fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
 body {
-    background-color: #68b333;
-    height: 100%;
-
-    
-  }
-
-  .wrap {
-    height: 100%;
-    width: 75%;
-    background-color: white;
-    margin: 0 auto;
-    border: 3px solid black;
-    padding: 10px;
-    min-width: 500px;
-    
-    
-  }
-  #header {
-    width: 100%;
-    text-align: center;
-  }
-
-  #mid {
-    display: flex;
-    min-height: 60px;
-  }
-
-  .container1 {
-
-    flex:1;
-    order:1;
-    text-align: center;
-    background-color: #b4ecb4;
-    background-image: url("/assets/img/fuel+.png");
-    background-repeat: no-repeat;
-    background-size:100% auto;
-    background-position: 15px 170px;
-    width: 50px;
-    margin: 5px;
-    overflow: hidden;
-    
-  }
-
-  .container2 {
-    flex:1;
-    order: 3;
-    text-align: center;
-    background-color: #b4ecb4;
-    background-image: url("/assets/img/fuel+.png");
-    background-repeat: no-repeat;
-    background-size:100% auto;
-    background-position: 15px 170px;
-    margin: 5px;
-    padding:2px;
-   
-  }
-
-  .container3 {
-    text-align: center;
-    flex:1;
-    order:2;
-    margin: 5px;
-  }
-
-
-  img {
-    
-    max-width: 100%; 
-    max-height: 450px; 
-  }
-
-
-#footer {
-display: flex;
-justify-content: space-between;
-margin: 0 100px;
+  width: 80%;
+  margin: auto;
+  background: rgba(76, 175, 80, 0);
 }
 
-#subButton, #edit-btn {
+.wrap {
+  height: 100%;
+  width: 100%;
+  margin-top: 25px;
+  padding: 10px;
+  min-width: 500px;
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+  background-position: 55px 100px;
+}
+#header {
+  width: 100%;
+  text-align: center;
+  font-family: 'Cinzel Decorative', cursive;
+  background-color: #a27f3d;
+  border-radius: 15px;
+  padding: 5px;
+  margin: 5px;
+}
+
+#mid {
+  display: flex;
+  min-height: 60px;
+  font-size: 28px;
+  font-family: 'Dosis', sans-serif;
+}
+#myChart {
+  margin-top: 50px;
+  background-color: #a27f3d;
+  border-radius: 5px;
+  padding: 10px;
+}
+.container1 {
+  flex: 1;
+  order: 2;
+  text-align: center;
+  width: 50px;
+  margin: 5px;
+  overflow: hidden;
+}
+
+.container2 {
+  flex: 1;
+  order: 1;
+  text-align: center;
+  margin: 5px;
+  padding: 2px;
+}
+
+.container3 {
+  text-align: center;
+  flex: 1;
+  order: 3;
+  margin: 5px;
+}
+.card-header {
+  background-color: #212529;
+  color: #a27f3d;
+}
+.card {
+  border: 5px solid #212529;
+  background-color: #212529;
+}
+.card-body {
+  background-color: #a27f3d;
+  color: #212529;
+  border-radius: 5px;
+}
+.btn {
+  border: 3px solid #212529;
+  border-radius: 5px;
+  background-color: #a27f3d;
+  color: #212529;
+  margin-top: 10px;
+}
+.btn:hover {
+  border: 3px solid #212529;
+  background-color: #212529;
+  color: #a27f3d;
+}
+.delete {
+  border: 3px solid #212529;
+  border-radius: 5px;
+  background-color: #212529;
+  color: #a27f3d;
+}
+.delete:hover {
+  border: 3px solid #a27f3d;
+  border-radius: 5px;
+  background-color: #a27f3d;
+  color: #212529;
+}
+.edit {
+  border: 3px solid #212529;
+  border-radius: 5px;
+  background-color: #212529;
+  color: #a27f3d;
+}
+.edit:hover {
+  border: 3px solid #a27f3d;
+  border-radius: 5px;
+  background-color: #a27f3d;
+  color: #212529;
+}
+#btn-link {
+  border: 3px solid #212529;
+  border-radius: 5px;
+  background-color: #212529;
+  color: #a27f3d;
+}
+#btn-link:hover {
+  border: 3px solid #a27f3d;
+  border-radius: 5px;
+  background-color: #a27f3d;
+  color: #212529;
+  text-decoration: none;
+}
+img {
+  max-width: 100%;
+  max-height: 450px;
+  padding: 10px;
+}
+
+#footer {
+  text-align: center;
+}
+
+#subButton,
+#edit-btn {
   visibility: hidden;
 }
 
@@ -86,13 +149,73 @@ margin: 0 100px;
 }
 
 .readingDate {
-  font-size:7px;
+  font-size: 7px;
   margin: 2px;
 }
 
 .btn-xs {
-  padding  : .25rem .4rem;
-  font-size  : .875rem;
-  line-height  : .5;
-  border-radius : .2rem;
+  padding: 0.25rem 0.4rem;
+  font-size: 0.875rem;
+  line-height: 0.5;
+  border-radius: 0.2rem;
+}
+h1 {
+  margin: 0px;
+}
+#footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  font-size: 28px;
+  font-family: 'Dosis', sans-serif;
+  border: 3px solid #212529;
+  border-radius: 5px;
+  background-color: #212529;
+  color: #a27f3d;
+  }
+/* Style The Dropdown Button */
+.dropbtn {
+  border: 3px solid #a27f3d;
+  border-radius: 5px;
+  background-color: #212529;
+  color: #a27f3d;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {
+  border: 3px solid #a27f3d;
+  border-radius: 5px;
+  background-color: #a27f3d;
+  color: #212529;
 }
