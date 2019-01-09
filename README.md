@@ -1,2 +1,0 @@
-# FuelMagic
-Fuel Tracker
