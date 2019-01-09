@@ -26,13 +26,22 @@ $(function() {
         
         }
     });
+	
+
+
+
+	
     $("#receiptPic").on('submit', function(event) {
+		$('#gif').css('visibility', 'visible');
+	
       const xhr = new XMLHttpRequest();
-      const fd = new FormData();
-      
+      const fd = new FormData();     
+	   
       xhr.open("POST", "/api/image", true);
       xhr.onreadystatechange = function() {
+		
         if (xhr.readyState == 4 && xhr.status == 200) {
+		  
           var data = JSON.parse(xhr.responseText);
 
           var fields = [['place'],
@@ -47,17 +56,19 @@ $(function() {
 
             el.css("visibility", "visible");
             if (value) el.val(value);
-          })
-        }
+			$('#gif').css('visibility', 'hidden');
+          })		 
+        }		
       };
-      fd.append('myImage', file);
+      fd.append('myImage', file);     
       // Initiate a multipart/form-data upload
-      xhr.send(fd);
+      xhr.send(fd);	  	 	  
     })
 
-    $("#add-btn").on('click', function(event) {
-        event.preventDefault();
 
+    $("#add-btn").on('click', function(event) {
+        event.preventDefault();		       
+      
         var newReading = {
             place: $("#place").val().trim(),
             address: $("#address").val().trim(),
