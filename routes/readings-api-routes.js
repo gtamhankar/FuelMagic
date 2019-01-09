@@ -1,4 +1,3 @@
-require('dotenv').config();
 var db = require("../models");
 var multer = require('multer');
 var path = require('path');
